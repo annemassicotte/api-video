@@ -1,7 +1,6 @@
 <?php
 
 require_once "../include/config.php";
-//include_once 'include/fonctions.php'; 
 
 class modele_avis{
     public $id; 
@@ -9,9 +8,8 @@ class modele_avis{
     public $commentaire;
     public $fk_video;
 
-    /***
-     * Fonction permettant de construire un objet de type modele_produit
-     */
+    /*Fonction permettant de construire un objet de type modele_avis*/
+
     public function __construct($id, $note, $commentaire, $fk_video) {
         $this->id = $id;
         $this->note = $note;
@@ -20,9 +18,8 @@ class modele_avis{
 
     }
 
-    /***
-     * Fonction permettant de se connecter à la base de données
-     */
+    /*Fonction permettant de se connecter à la base de données*/
+
     static function connecter() {
         
         $mysqli = new mysqli(Db::$host, Db::$username, Db::$password, Db::$database);
@@ -37,10 +34,8 @@ class modele_avis{
     }
 
 
+    /*Fonction permettant de récupérer un avis en fonction de son identifiant*/
 
-    /***
-     * Fonction permettant de récupérer un avis en fonction de son identifiant
-     */
     public static function ObtenirAvisDuneVideo($fk_video) {
 
         $liste = [];
@@ -69,30 +64,24 @@ class modele_avis{
 
 
 
+    /*Fonction permettant d'ajouter un avis pour une vidéo*/
 
-
-    /***
-     * Fonction permettant d'ajouter un produit
-     */
-    /* public static function ajouter($nom, $description, $code, $date_publication, $duree, $sous_titres, $url_image) {
+    public static function AjouterAvis($fk_video, $note, $commentaire) {
         $message = '';
-
         $mysqli = self::connecter();
-        
+
         // Création d'une requête préparée
-        if ($requete = $mysqli->prepare("INSERT INTO videos (nom, description, code, date_publication, duree, sous_titres, url_image) VALUES(?, ?, ?, ?, ?, ?, ?)")) {      
+        if ($requete = $mysqli->prepare("INSERT INTO avis (note, commentaire, fk_video) VALUES (?, ?, ?)")) {
+            $requete->bind_param("isi", $note, $commentaire, $fk_video);
 
-        $requete->bind_param("ssssiss", $nom, $description, $code, $date_publication, $duree, $sous_titres, $url_image);
+            if ($requete->execute()) {
+                $message = "Avis ajouté avec succès";
+            } else {
+                $message = "Une erreur est survenue lors de l'ajout de l'avis : " . $requete->error;
+            }
 
-        if($requete->execute()) { // Exécution de la requête
-            $message = "Vidéo ajouté";  // Message ajouté dans la page en cas d'ajout réussi
+            $requete->close(); // Fermeture du traitement
         } else {
-            $message =  "Une erreur est survenue lors de l'ajout: " . $requete->error;  // Message ajouté dans la page en cas d’échec
-        }
-
-        $requete->close(); // Fermeture du traitement
-
-        } else  {
             echo "Une erreur a été détectée dans la requête utilisée : ";   // Pour fins de débogage
             echo $mysqli->error;
             echo "<br>";
@@ -100,7 +89,7 @@ class modele_avis{
         }
 
         return $message;
-    } */
+    }
 
 }
 ?>

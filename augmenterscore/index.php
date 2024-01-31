@@ -1,24 +1,24 @@
 <?php
 include_once '../include/config.php'; 
-require_once '../controleurs/avis.php';
+require_once '../controleurs/score.php';
 
 header('Content-Type: application/json;');
 header('Access-Control-Allow-Origin: *'); 
 
-$controleurAvis=new ControleurAvis;
+$controleurScore=new ControleurScore;
 
 switch($_SERVER['REQUEST_METHOD'])
 {
-case 'GET':  // GESTION DES DEMANDES DE TYPE GET
-	if(isset($_GET['id'])) { 
-		$controleurAvis->afficherAvisJSON();
+case 'PATCH':
+	$reponse = new stdClass();
+	$reponse->message = "Augmenter le score: ";
+	if(isset($_GET['id'])) {
+		$controleurScore->augmenterScore($_GET['id']);
 	}
-	break;
+	else {
+		$reponse->message = "L'ID de la vidéo est manquant.";
+	}
 
-case 'POST':
-	$corpsJSON = file_get_contents('php://input');
-	$data = json_decode($corpsJSON, TRUE);
-	$controleurAvis->ajouterAvisJSON($data);
 	break;
 
 default:

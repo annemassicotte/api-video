@@ -7,9 +7,9 @@ $controleurVideos=new ControleurVideo;
 switch($_SERVER['REQUEST_METHOD']) {
     case 'GET': // GESTION DES DEMANDES DE TYPE GET
         if(isset($_GET['id'])) { // CODE PERMETTANT DE RÉCUPÉRER L'ENREGISTREMENT CORRESPONDANT À L'IDENTIFIANT PASSÉ EN PARAMÈTRE
-            $controleurVideos->afficherFicheJSON($_GET['id']);
+            $controleurVideos->afficherUneJSON($_GET['id']);
         } else {// CODE PERMETTANT DE RÉCUPÉRER TOUT LES ENREGISTREMENTS
-            $controleurVideos->afficherListeJSON();
+            $controleurVideos->afficherToutesJSON();
         }
         break;
     case 'POST': // CODE PERMETTANT DE D'AJOUTER UN ENREGISTREMENT
@@ -18,16 +18,12 @@ switch($_SERVER['REQUEST_METHOD']) {
         $controleurVideos->ajouterJSON($data);
         break;
     case 'PUT': // CODE PERMETTANT DE METTRE À JOUR L'ENREGISTREMENT CORRESPONDANT À L'IDENTIFIANT PASSÉ EN PARAMÈTRE
-        if(isset($_GET['id'])) {
             $corpsJSON = file_get_contents('php://input');
             $data = json_decode($corpsJSON, TRUE);
             $controleurVideos->modifierJSON($data);
-        }
         break;
     case 'DELETE': // CODE PERMETTANT DE SUPPRIMER L'ENREGISTREMENT CORRESPONDANT À L'IDENTIFIANT PASSÉ EN PARAMÈTRE
-        if(isset($_GET['id'])) {
-            $controleurVideos->supprimerJSON($_GET['id']);
-        }
+            $controleurVideos->supprimerJSON();
         break;
         default:
 }
