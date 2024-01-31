@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 31, 2024 at 02:51 AM
+-- Generation Time: Jan 31, 2024 at 02:57 AM
 -- Server version: 8.0.31
 -- PHP Version: 7.4.33
 
@@ -20,6 +20,47 @@ SET time_zone = "+00:00";
 --
 -- Database: `videos`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `avis`
+--
+
+CREATE TABLE `avis` (
+  `id` int NOT NULL,
+  `note` int NOT NULL,
+  `commentaire` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `fk_video` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `avis`
+--
+
+INSERT INTO `avis` (`id`, `note`, `commentaire`, `fk_video`) VALUES
+(4, 9, 'Quel beau chien!', 1),
+(5, 10, 'Emma, il est tellement mignon! J\'ai hâte de le voir dans de futures vidéos!', 1),
+(6, 10, 'Son nom lui va trop bien! J\'adore!', 1),
+(7, 7, 'J\'ajouterais aussi le Mont Blanc à ton classement. Sinon, c\'est une bonne vidéo!', 2),
+(8, 8, 'Merci pour cette vidéo, John! J\'ajoute tes recommandations à ma liste d\'endroits à explorer.', 2),
+(9, 8, 'La vidéo est très intéressante, merci!', 4),
+(10, 9, 'Merci Alice, j\'ai beaucoup appris grâce à ta vidéo.', 4),
+(11, 7, 'Ton contenu est très informatif, comme toujours! Continue ton bon travail!', 4),
+(12, 4, 'C\'est une bonne vidéo, mais la qualité du son laisse à désirer. Serait-ce un problème technique?', 5),
+(13, 6, 'Je vais tenter de mettre tes trucs en pratique, merci David! Mon seul commentaire constructif serait d\'alléger un peu tes prochaines vidéos, car il y a beaucoup d\'animations.', 5),
+(14, 10, '\"Merci pour cette performance, j\'adore cette chanson!', 6),
+(15, 9, 'Quelle belle performance!', 6),
+(16, 10, 'Vous êtes tellement talentueux! J\'ai très hâte de vous voir en spectacle!', 6),
+(17, 10, 'Les Vagabonds de l\'Horizon: ma découverte musicale de l\'année!', 6),
+(18, 10, 'Je suis complètement en amour avec cette chanson. Les paroles sont tellement touchantes!', 7),
+(19, 8, 'J\'aime beaucoup la vidéo, elle s\'agence très bien avec la chanson. J\'ai hâte d\'en voir plus!', 7),
+(20, 6, 'Je trouve la recette un peu trop sucrée à mon goût: j\'ai dû ajuster les mesures.', 8),
+(21, 7, 'Merci pour le partage, j\'aime bien faire ce yogourt pour déjeuner! Le crumble est un peu sucré, mais qui n\'aime pas le sucre?', 8),
+(22, 3, 'Mon terrarium meurt à chaque fois que je tente l\'expérience! Pourtant, je suis toutes tes instructions à la lettre. À l\'aide!', 9),
+(23, 6, 'Bonne vidéo, mais je trouve que ton débit de voix est un peu rapide. Prends ton temps :)', 9),
+(24, 10, 'Ton chat ressemble au mien!', 1),
+(25, 9, 'Bonne vidéo', 2);
 
 -- --------------------------------------------------------
 
@@ -64,6 +105,13 @@ INSERT INTO `videos` (`id`, `nom`, `description`, `code`, `categories`, `date_pu
 --
 
 --
+-- Indexes for table `avis`
+--
+ALTER TABLE `avis`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `videos_avis` (`fk_video`);
+
+--
 -- Indexes for table `videos`
 --
 ALTER TABLE `videos`
@@ -74,10 +122,26 @@ ALTER TABLE `videos`
 --
 
 --
+-- AUTO_INCREMENT for table `avis`
+--
+ALTER TABLE `avis`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `avis`
+--
+ALTER TABLE `avis`
+  ADD CONSTRAINT `videos_avis` FOREIGN KEY (`fk_video`) REFERENCES `videos` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
