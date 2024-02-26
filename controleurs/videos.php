@@ -34,10 +34,10 @@ class ControleurVideo {
     function ajouterJSON($data) {
         $resultat = new stdClass();
         if(isset($data['nom']) && isset($data['description']) && isset($data['code']) && isset($data['categories']) &&
-            isset($data['date_publication']) && isset($data['duree']) && isset($data['score']) && isset($data['sous_titres']) && 
+            isset($data['date_publication']) && isset($data['duree']) && isset($data['nombre_vues']) && isset($data['score']) && isset($data['sous_titres']) && 
             isset($data['url_image']) && isset($data['auteur']['nom_auteur']) && isset($data['auteur']['utilisateur']) && isset($data['auteur']['verifie']) && isset($data['auteur']['description_auteur'])) {
 
-                $resultat->message = modele_video::ajouter($data['nom'], $data['description'], $data['code'], $data['categories'], $data['date_publication'], $data['duree'], $data['score'], $data['sous_titres'], $data['url_image'], $data['auteur']['nom_auteur'], $data['auteur']['utilisateur'], $data['auteur']['verifie'], $data['auteur']['description_auteur']);
+                $resultat->message = modele_video::ajouter($data['nom'], $data['description'], $data['code'], $data['categories'], $data['date_publication'], $data['duree'], $data['nombre_vues'], $data['score'], $data['sous_titres'], $data['url_image'], $data['auteur']['nom_auteur'], $data['auteur']['utilisateur'], $data['auteur']['verifie'], $data['auteur']['description_auteur']);
         } else {
             $resultat->message = "Impossible d'ajouter une vidéo. Des informations sont manquantes.";
         }
@@ -49,8 +49,8 @@ class ControleurVideo {
         $resultat = new stdClass();
 
         if(isset($_GET['id'])) {
-            if(isset($data['nom']) && isset($data['description']) && isset($data['code']) && isset($data['date_publication']) && isset($data['duree']) && isset($data['score']) && isset($data['sous_titres']) && isset($data['url_image']) && isset($data['auteur']['nom_auteur']) && isset($data['auteur']['utilisateur']) && isset($data['auteur']['verifie']) && isset($data['auteur']['description_auteur'])){
-                $resultat->message = modele_video::modifier($_GET['id'], $data['nom'], $data['description'], $data['code'], $data['categories'], $data['date_publication'], $data['duree'], $data['score'], $data['sous_titres'], $data['url_image'], $data['auteur']['nom_auteur'], $data['auteur']['utilisateur'], $data['auteur']['verifie'], $data['auteur']['description_auteur']);
+            if(isset($data['nom']) && isset($data['description']) && isset($data['code']) && isset($data['date_publication']) && isset($data['duree']) && isset($data['nombre_vues']) && isset($data['score']) && isset($data['sous_titres']) && isset($data['url_image']) && isset($data['auteur']['nom_auteur']) && isset($data['auteur']['utilisateur']) && isset($data['auteur']['verifie']) && isset($data['auteur']['description_auteur'])){
+                $resultat->message = modele_video::modifier($_GET['id'], $data['nom'], $data['description'], $data['code'], $data['categories'], $data['date_publication'], $data['duree'], $data['nombre_vues'], $data['score'], $data['sous_titres'], $data['url_image'], $data['auteur']['nom_auteur'], $data['auteur']['utilisateur'], $data['auteur']['verifie'], $data['auteur']['description_auteur']);
             } else {
                 $resultat->message = "Impossible de modifier la vidéo. Des informations sont manquantes.";
             } 
